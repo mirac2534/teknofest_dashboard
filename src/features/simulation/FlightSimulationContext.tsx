@@ -65,7 +65,10 @@ const vehicleId = 'SYN-UAV-07';
 const genesisHash = '0'.repeat(64);
 const maxLogs = 180;
 const maxPackets = 600;
+<<<<<<< HEAD
 const telemetryIntervalMs = 2500;
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
 
 const initialConnectionState: ConnectionState = {
   status: 'ONLINE',
@@ -320,7 +323,10 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   const snapshotRef = useRef(snapshot);
   const physicsRef = useRef(createInitialPhysics());
   const generatingRef = useRef(false);
+<<<<<<< HEAD
   const lastGeneratedAtRef = useRef(0);
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
 
   useEffect(() => {
     snapshotRef.current = snapshot;
@@ -379,9 +385,13 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   );
 
   const generatePacket = useCallback(async () => {
+<<<<<<< HEAD
     const now = Date.now();
     if (generatingRef.current || !snapshotRef.current.running || now - lastGeneratedAtRef.current < telemetryIntervalMs - 20) return;
     lastGeneratedAtRef.current = now;
+=======
+    if (generatingRef.current || !snapshotRef.current.running) return;
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
     generatingRef.current = true;
 
     try {
@@ -536,7 +546,11 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   useEffect(() => {
     const timer = window.setInterval(() => {
       void generatePacket();
+<<<<<<< HEAD
     }, telemetryIntervalMs);
+=======
+    }, 1000);
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
 
     return () => window.clearInterval(timer);
   }, [generatePacket]);
@@ -639,7 +653,10 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
       },
       resetSimulation: () => {
         physicsRef.current = createInitialPhysics();
+<<<<<<< HEAD
         lastGeneratedAtRef.current = 0;
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
         commitSnapshot(() => ({
           running: true,
           flightId,
@@ -674,7 +691,10 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
       triggerPitotAnomaly: () => {
         physicsRef.current.pitotAnomalyUntil = physicsRef.current.sequenceNo + 8;
         pushLogs(createLog('WARNING', 'PITOT', 'Pitot anomalisi tetiklendi'));
+<<<<<<< HEAD
         void createCriticalProof('PITOT_ANOMALY', 'WARNING');
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
       },
       triggerGpsSpoofing: () => {
         physicsRef.current.gpsSpoofingUntil = physicsRef.current.sequenceNo + 8;

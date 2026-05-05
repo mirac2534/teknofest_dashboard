@@ -5,6 +5,10 @@ import {
   Avatar,
   Box,
   Divider,
+<<<<<<< HEAD
+=======
+  Drawer,
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
   IconButton,
   List,
   ListItemButton,
@@ -12,7 +16,10 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+<<<<<<< HEAD
   Paper,
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
   Stack,
   Toolbar,
   Tooltip,
@@ -28,10 +35,16 @@ import PersonIcon from '@mui/icons-material/Person';
 import { appRoutes, getRouteByPath } from '../app/routes';
 import { useAuth } from '../features/auth/AuthContext';
 import { useThemeMode } from '../features/theme/SynapseThemeProvider';
+<<<<<<< HEAD
 
 const drawerWidth = 260;
 const collapsedWidth = 74;
 const logoUrl = new URL('../../Synapse_logo.png', import.meta.url).href;
+=======
+import { LiveLogConsole } from '../features/logs/LiveLogConsole';
+
+const drawerWidth = 260;
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
 
 export function AuthLayout() {
   const theme = useTheme();
@@ -40,7 +53,10 @@ export function AuthLayout() {
   const { logout, session } = useAuth();
   const { mode, toggleMode } = useThemeMode();
   const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null);
+<<<<<<< HEAD
   const [menuOpen, setMenuOpen] = useState(false);
+=======
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
   const currentRoute = getRouteByPath(location.pathname);
 
   function handleLogout() {
@@ -49,6 +65,7 @@ export function AuthLayout() {
     navigate('/login', { replace: true });
   }
 
+<<<<<<< HEAD
   const drawerContent = (
     <Stack sx={{ height: '100%' }}>
       <Stack spacing={1.5} sx={{ p: 3 }}>
@@ -149,6 +166,111 @@ export function AuthLayout() {
       </Paper>
 
       <Box sx={{ minWidth: 0, pl: `${collapsedWidth}px` }}>
+=======
+  return (
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            borderRight: `1px solid ${theme.palette.divider}`,
+            bgcolor: theme.palette.mode === 'dark' ? '#081321' : '#ffffff',
+          },
+        }}
+      >
+        <Stack sx={{ height: '100%' }}>
+          <Stack spacing={1.5} sx={{ p: 3 }}>
+            <Stack direction="row" spacing={1.5} alignItems="center">
+              <Box
+                sx={{
+                  width: 46,
+                  height: 46,
+                  display: 'grid',
+                  placeItems: 'center',
+                  borderRadius: '8px',
+                  color: theme.palette.primary.main,
+                  bgcolor: alpha(theme.palette.primary.main, 0.12),
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.35)}`,
+                }}
+              >
+                <AutoAwesomeMosaicIcon />
+              </Box>
+              <Box>
+                <Typography variant="h6" sx={{ lineHeight: 1 }}>
+                  SYNAPSE
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Digital Black Box
+                </Typography>
+              </Box>
+            </Stack>
+          </Stack>
+
+          <Divider />
+
+          <List sx={{ px: 1.5, py: 2 }}>
+            {appRoutes.map((route) => {
+              const Icon = route.icon;
+              const active = location.pathname === route.path;
+
+              return (
+                <ListItemButton
+                  key={route.path}
+                  selected={active}
+                  onClick={() => navigate(route.path)}
+                  sx={{
+                    mb: 0.8,
+                    minHeight: 48,
+                    borderRadius: '8px',
+                    '&.Mui-selected': {
+                      color: theme.palette.primary.main,
+                      bgcolor: alpha(theme.palette.primary.main, 0.14),
+                    },
+                    '&.Mui-selected:hover': {
+                      bgcolor: alpha(theme.palette.primary.main, 0.18),
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 40, color: active ? theme.palette.primary.main : 'text.secondary' }}>
+                    <Icon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={route.title}
+                    primaryTypographyProps={{ fontWeight: active ? 800 : 650, fontSize: 14 }}
+                  />
+                </ListItemButton>
+              );
+            })}
+          </List>
+
+          <Box sx={{ flex: 1 }} />
+
+          <Box sx={{ p: 2 }}>
+            <Box
+              sx={{
+                p: 1.5,
+                borderRadius: '8px',
+                border: `1px solid ${theme.palette.divider}`,
+                bgcolor: alpha(theme.palette.primary.main, theme.palette.mode === 'dark' ? 0.07 : 0.05),
+              }}
+            >
+              <Typography variant="caption" color="text.secondary">
+                Oturum
+              </Typography>
+              <Typography variant="body2" sx={{ fontWeight: 800 }}>
+                {session?.username ?? 'Operatör'}
+              </Typography>
+            </Box>
+          </Box>
+        </Stack>
+      </Drawer>
+
+      <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
         <AppBar
           position="sticky"
           color="transparent"
@@ -190,7 +312,11 @@ export function AuthLayout() {
           </Toolbar>
         </AppBar>
 
+<<<<<<< HEAD
         <Box component="main" sx={{ p: { xs: 2, md: 3 }, pb: { xs: 3, md: 3 } }}>
+=======
+        <Box component="main" sx={{ p: { xs: 2, md: 3 }, pb: 15 }}>
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
           <Outlet />
         </Box>
       </Box>
@@ -221,6 +347,10 @@ export function AuthLayout() {
         </MenuItem>
       </Menu>
 
+<<<<<<< HEAD
+=======
+      <LiveLogConsole />
+>>>>>>> 87a5718b8febfe1f3544715ec200e79ad6ef6915
     </Box>
   );
 }
