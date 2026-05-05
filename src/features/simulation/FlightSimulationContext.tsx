@@ -65,6 +65,7 @@ const vehicleId = 'SYN-UAV-07';
 const genesisHash = '0'.repeat(64);
 const maxLogs = 180;
 const maxPackets = 600;
+const telemetryIntervalMs = 2500;
 
 const initialConnectionState: ConnectionState = {
   status: 'ONLINE',
@@ -319,6 +320,7 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   const snapshotRef = useRef(snapshot);
   const physicsRef = useRef(createInitialPhysics());
   const generatingRef = useRef(false);
+  const lastGeneratedAtRef = useRef(0);
 
   useEffect(() => {
     snapshotRef.current = snapshot;
@@ -377,7 +379,9 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   );
 
   const generatePacket = useCallback(async () => {
-    if (generatingRef.current || !snapshotRef.current.running) return;
+    const now = Date.now();
+    if (generatingRef.current || !snapshotRef.current.running || now - lastGeneratedAtRef.current < telemetryIntervalMs - 20) return;
+    lastGeneratedAtRef.current = now;
     generatingRef.current = true;
 
     try {
@@ -532,7 +536,7 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
   useEffect(() => {
     const timer = window.setInterval(() => {
       void generatePacket();
-    }, 1000);
+    }, telemetryIntervalMs);
 
     return () => window.clearInterval(timer);
   }, [generatePacket]);
@@ -635,6 +639,7 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
       },
       resetSimulation: () => {
         physicsRef.current = createInitialPhysics();
+        lastGeneratedAtRef.current = 0;
         commitSnapshot(() => ({
           running: true,
           flightId,
@@ -669,6 +674,7 @@ export function FlightSimulationProvider({ children }: { children: ReactNode }) 
       triggerPitotAnomaly: () => {
         physicsRef.current.pitotAnomalyUntil = physicsRef.current.sequenceNo + 8;
         pushLogs(createLog('WARNING', 'PITOT', 'Pitot anomalisi tetiklendi'));
+        void createCriticalProof('PITOT_ANOMALY', 'WARNING');
       },
       triggerGpsSpoofing: () => {
         physicsRef.current.gpsSpoofingUntil = physicsRef.current.sequenceNo + 8;
