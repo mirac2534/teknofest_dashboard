@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Synapse Flight Integrity Dashboard
 
 Local demo web app for **Synapse Dijital Kara Kutu Sistemi** / **Synapse Flight Integrity Dashboard**.
@@ -26,3 +27,6 @@ npm run build
 
 - Kullanıcı adı: `Synapse`
 - Şifre: `1516`
+=======
+# teknofestDasboard
+>>>>>>> dd19df0f77ffcfdfed4b75dc371cc93ba3c267ce
