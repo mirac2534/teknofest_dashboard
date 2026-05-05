@@ -13,4 +13,7 @@ export type LiveLog = {
   severity: LogSeverity;
   source: string;
   message: string;
+  relatedSequenceNo?: number;
 };
+
+export type SystemLog = LiveLog;

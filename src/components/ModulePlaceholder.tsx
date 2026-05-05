@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Chip, Stack, Typography, alpha, useTheme } from '@mui/material';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import { useFlightSimulation } from '../features/simulation/FlightSimulationContext';
 
 type ModulePlaceholderProps = {
   title: string;
@@ -10,6 +11,7 @@ type ModulePlaceholderProps = {
 
 export function ModulePlaceholder({ title, description, status = 'Hazırlık aşaması' }: ModulePlaceholderProps) {
   const theme = useTheme();
+  const { connectionState, latestPacket, blockchainRecords, bufferPackets, running } = useFlightSimulation();
 
   return (
     <Stack spacing={3}>
@@ -51,6 +53,13 @@ export function ModulePlaceholder({ title, description, status = 'Hazırlık aş
                 Bu modül bir sonraki geliştirme adımında doldurulacaktır.
               </Typography>
             </Box>
+          </Stack>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ mt: 2 }} flexWrap="wrap">
+            <Chip size="small" label={running ? 'Simülasyon çalışıyor' : 'Simülasyon duraklatıldı'} color={running ? 'success' : 'warning'} />
+            <Chip size="small" label={`Bağlantı: ${connectionState.status}`} variant="outlined" />
+            <Chip size="small" label={`Son sıra: ${latestPacket?.sequenceNo ?? 0}`} variant="outlined" />
+            <Chip size="small" label={`Tampon: ${bufferPackets.length}`} variant="outlined" />
+            <Chip size="small" label={`Blok kayıtları: ${blockchainRecords.length}`} variant="outlined" />
           </Stack>
         </CardContent>
       </Card>

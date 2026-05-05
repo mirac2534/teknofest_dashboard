@@ -14,7 +14,7 @@ import {
 import TerminalIcon from '@mui/icons-material/Terminal';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { mockLogs } from './mockLogs';
+import { useFlightSimulation } from '../simulation/FlightSimulationContext';
 import type { LogSeverity } from '../../types/logs';
 
 const severityColors: Record<LogSeverity, string> = {
@@ -30,6 +30,7 @@ const severityColors: Record<LogSeverity, string> = {
 export function LiveLogConsole() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
+  const { logs } = useFlightSimulation();
 
   const consoleBackground = theme.palette.mode === 'dark' ? '#050a12' : '#f8fbff';
   const rowBackground = theme.palette.mode === 'dark' ? 'rgba(15, 23, 42, 0.76)' : 'rgba(226, 232, 240, 0.62)';
@@ -60,7 +61,7 @@ export function LiveLogConsole() {
           <Box>
             <Typography variant="subtitle2">Canlı Sistem Günlüğü</Typography>
             <Typography variant="caption" color="text.secondary">
-              Demo konsol akışı
+              Simülasyon motorundan canlı akış
             </Typography>
           </Box>
         </Stack>
@@ -83,7 +84,7 @@ export function LiveLogConsole() {
           }}
         >
           <Stack spacing={0.8}>
-            {mockLogs.map((log) => {
+            {logs.map((log) => {
               const severityColor = severityColors[log.severity];
 
               return (
